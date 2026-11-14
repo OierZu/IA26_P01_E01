@@ -3,4 +3,6 @@
    *.pyc
    .venv/
    .env
-   .DS_Store
+   .DS_Store__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
