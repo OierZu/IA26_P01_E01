@@ -135,8 +135,9 @@ def make_heuristic(name, prob, places):
     min_in = {s: min((prob.km(u, s) for u in places if u != s), default=0.0) for s in places}
 
     def required(loc, pend):
+        # a pending stop at the current location costs nothing to reach, so it is not counted
+        req = set(pend) - {loc}
         # the depot is needed again if the vehicle is away or has stops left
-        req = set(pend)
         if pend or loc != depot:
             req.add(depot)
         return req
