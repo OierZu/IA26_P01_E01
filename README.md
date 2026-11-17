@@ -105,27 +105,30 @@ It is a synthetic approximation, but deterministic and symmetric. It is enough t
 ## 5. Repository structure
 
 ```
-IA26_P01_G##/
-├── data_tiny/                 # CSV dataset (tiny)
-├── data_small/                # CSV dataset (small)
-├── data_*/                    # Other datasets
+IA26_P01_E01/
+├── data_tiny/                   # CSV dataset (tiny)
+├── data_small/                  # CSV dataset (small)
 ├── src/
-│   ├── model.py               # Entities, cost function, route feasibility
-│   ├── informed.py            # Greedy, A*, heuristics
-│   ├── local_search.py        # Hill climbing
-│   └── csp.py                 # Backtracking, forward checking, AC-3
+│   ├── model.py                 # Entities, cost function, simulation and route feasibility
+│   ├── informed.py              # Greedy, A*, heuristics h1 and h2
+│   ├── local_search.py          # Hill-Climbing
+│   └── csp.py                   # Backtracking, MRV, degree, LCV, forward checking, AC-3
 ├── notebooks/
-│   ├── 01_Project01_G##.ipynb # Main project notebook
-│   ├── 02_eda_tiny.ipynb      # Exploratory data analysis
-│   └── 03_*.ipynb             # Other notebooks (informed, local search, CSP)
-└── README.md
+│   ├── 01_Project01_E01.ipynb   # Main project notebook
+│   ├── 02_eda_tiny.ipynb        # Exploratory data analysis
+│   ├── 03_modeling.ipynb        # Modeling and feasibility checker tests
+│   ├── 04_informed.ipynb        # Informed search
+│   ├── 05_local_search.ipynb    # Local search
+│   └── 06_csp.ipynb             # CSP
+├── README.md
+└── readme.txt                   # Short readme with the GitHub link (Moodle)
 ```
 
 ---
 
 ## 6. Notebook structure
 
-The main notebook, `01_Project01_G##.ipynb`, is organized with each step in a distinct block, text blocks documenting reasoning, decisions, results and analysis, and brief comments in the code.
+The main notebook, `01_Project01_E01.ipynb`, is organized with each step in a distinct block, text blocks documenting reasoning, decisions, results and analysis, and brief comments in the code.
 
 ### Preliminary delivery
 
@@ -139,9 +142,9 @@ The main notebook, `01_Project01_G##.ipynb`, is organized with each step in a di
 
 | Section | Content | Deliverable |
 |---------|---------|-------------|
-| **Informed search** | Greedy and A\* with 2 heuristics; routes for the 2 tiny vehicles (count expanded nodes) | `informed.py` notebook |
-| **Local search** | Hill-Climbing on top of the Greedy solution; cost vs. iteration curves | `local_search.ipynb` |
-| **CSP** | Variables, domains and constraints definition; heuristics applied to implement the soft constraints; feasible assignment and number of backtracks | `csp.ipynb` |
+| **Informed search** | Greedy and A\* with 2 heuristics; routes for the 2 tiny vehicles (count expanded nodes) | `informed.py`, `04_informed.ipynb` |
+| **Local search** | Hill-Climbing on top of the Greedy solution; cost vs. iteration curves | `local_search.py`, `05_local_search.ipynb` |
+| **CSP** | Variables, domains and constraints definition; heuristics applied to implement the soft constraints; feasible assignment and number of backtracks | `csp.py`, `06_csp.ipynb` |
 | **Results analysis** | Best solutions found; critical analysis; execution times; comparison between algorithms; future improvements for the agent | Main notebook |
 | **Conclusion** | Outcomes, development process and tools used | Main notebook |
 
