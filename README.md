@@ -3,9 +3,9 @@
 > Project 01 · Artificial Intelligence (AI) 2026-27
 > Degree on Computer Systems Engineering · IPCA (Escola Superior de Tecnologia)
 
-**Repository:** `IA26_P01_E01` (private GitHub repository)
+**Repository:** `IA26_P01_E01` (public GitHub repository)
 **Repository Link:** <a href="https://github.com/OierZu/IA26_P01_E01.git">GitHub project</a>
-**Status:** preliminary delivery (first progress report)
+**Status:** all three algorithm blocks implemented and executed (informed search, local search, CSP)
 
 ---
 
@@ -105,27 +105,30 @@ It is a synthetic approximation, but deterministic and symmetric. It is enough t
 ## 5. Repository structure
 
 ```
-IA26_P01_G##/
-├── data_tiny/                 # CSV dataset (tiny)
-├── data_small/                # CSV dataset (small)
-├── data_*/                    # Other datasets
+IA26_P01_E01/
+├── data_tiny/                   # CSV dataset (tiny)
+├── data_small/                  # CSV dataset (small)
 ├── src/
-│   ├── model.py               # Entities, cost function, route feasibility
-│   ├── informed.py            # Greedy, A*, heuristics
-│   ├── local_search.py        # Hill climbing
-│   └── csp.py                 # Backtracking, forward checking, AC-3
+│   ├── model.py                 # Entities, cost function, simulation and route feasibility
+│   ├── informed.py              # Greedy, A*, heuristics h1 and h2
+│   ├── local_search.py          # Hill-Climbing
+│   └── csp.py                   # Backtracking, MRV, degree, LCV, forward checking, AC-3
 ├── notebooks/
-│   ├── 01_Project01_G##.ipynb # Main project notebook
-│   ├── 02_eda_tiny.ipynb      # Exploratory data analysis
-│   └── 03_*.ipynb             # Other notebooks (informed, local search, CSP)
-└── README.md
+│   ├── 01_Project01_E01.ipynb   # Main project notebook
+│   ├── 02_eda_tiny.ipynb        # Exploratory data analysis
+│   ├── 03_modeling.ipynb        # Modeling and feasibility checker tests
+│   ├── 04_informed.ipynb        # Informed search
+│   ├── 05_local_search.ipynb    # Local search
+│   └── 06_csp.ipynb             # CSP
+├── README.md
+└── readme.txt                   # Short readme with the GitHub link (Moodle)
 ```
 
 ---
 
 ## 6. Notebook structure
 
-The main notebook, `01_Project01_G##.ipynb`, is organized with each step in a distinct block, text blocks documenting reasoning, decisions, results and analysis, and brief comments in the code.
+The main notebook, `01_Project01_E01.ipynb`, is organized with each step in a distinct block, text blocks documenting reasoning, decisions, results and analysis, and brief comments in the code.
 
 ### Preliminary delivery
 
@@ -139,23 +142,47 @@ The main notebook, `01_Project01_G##.ipynb`, is organized with each step in a di
 
 | Section | Content | Deliverable |
 |---------|---------|-------------|
-| **Informed search** | Greedy and A\* with 2 heuristics; routes for the 2 tiny vehicles (count expanded nodes) | `informed.py` notebook |
-| **Local search** | Hill-Climbing on top of the Greedy solution; cost vs. iteration curves | `local_search.ipynb` |
-| **CSP** | Variables, domains and constraints definition; heuristics applied to implement the soft constraints; feasible assignment and number of backtracks | `csp.ipynb` |
+| **Informed search** | Greedy and A\* with 2 heuristics; routes for the 2 tiny vehicles (count expanded nodes) | `informed.py`, `04_informed.ipynb` |
+| **Local search** | Hill-Climbing on top of the Greedy solution; cost vs. iteration curves | `local_search.py`, `05_local_search.ipynb` |
+| **CSP** | Variables, domains and constraints definition; heuristics applied to implement the soft constraints; feasible assignment and number of backtracks | `csp.py`, `06_csp.ipynb` |
 | **Results analysis** | Best solutions found; critical analysis; execution times; comparison between algorithms; future improvements for the agent | Main notebook |
 | **Conclusion** | Outcomes, development process and tools used | Main notebook |
 
 ---
 
-## 7. Progress so far
+## 7. Progress
 
 - [x] Public GitHub repository created and collaborators added
-- [ ] Dataset loaded and explored (EDA)
-- [ ] Data integrity and time-window validation
-- [ ] Domain model (`Problem`, `Request`, `Vehicle`, `State`)
-- [ ] Cost function and route feasibility checker
-- [ ] Informed search (Greedy, A\*) 
-- [ ] Local search (Hill-Climbing)
-- [ ] CSP formulation
-      
----
+- [x] Dataset loaded and explored (EDA) — `notebooks/02_eda_tiny.ipynb`
+- [x] Data integrity and time-window validation
+- [x] Domain model (`Problem`, `Request`, `Vehicle`, `State`) — `src/model.py`
+- [x] Cost function and route feasibility checker (tested with hand-made wrong routes) — `notebooks/03_modeling.ipynb`
+- [x] Informed search (Greedy, A\*, heuristics h1 and h2) — `src/informed.py`, `notebooks/04_informed.ipynb`
+- [x] Local search (Hill-Climbing from the Greedy solution) — `src/local_search.py`, `notebooks/05_local_search.ipynb`
+- [x] CSP (backtracking, MRV, degree, LCV, forward checking, AC-3) — `src/csp.py`, `notebooks/06_csp.ipynb`
+- [x] Main notebook with results analysis and conclusion — `notebooks/01_Project01_E01.ipynb`
+
+## 8. How to run
+
+```
+pip install pandas numpy matplotlib jupyter
+cd notebooks
+jupyter notebook 01_Project01_E01.ipynb      # Run All (about 40 seconds)
+```
+
+The code uses only `pandas`, `numpy`, `matplotlib`, `heapq`, `time` and `itertools`.
+
+## 9. Results (executed, tiny / small, total km)
+
+| Method | tiny | small |
+|--------|------|-------|
+| Greedy h1 | 724.28 | 1090.63 |
+| A\* (h1 and h2) | 724.28 | 1031.75 |
+| Hill-Climbing from Greedy h1 | 580.90 | 785.50 |
+| CSP + A\* legs | 662.47 | 867.50 |
+
+All solutions pass the independent feasibility checker. Details, expanded nodes, backtracks and times are in the main notebook.
+
+## 10. Implementation decisions to confirm with the lecturer
+
+The brief leaves several points open. Section 3.1 of the main notebook lists what we assumed (waiting allowed, service per stop, return to the center, one visit per producer and day, legs deliver-stored / collect / deliver-new per vehicle and day, refrigeration as a soft preference only).
